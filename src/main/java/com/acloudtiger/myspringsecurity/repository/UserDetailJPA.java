@@ -1,4 +1,4 @@
-package com.acloudtiger.myspringsecurity.jpa;
+package com.acloudtiger.myspringsecurity.repository;
 
 import com.acloudtiger.myspringsecurity.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

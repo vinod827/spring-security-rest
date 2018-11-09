@@ -2,6 +2,8 @@ package com.acloudtiger.myspringsecurity.controller;
 
 import com.acloudtiger.myspringsecurity.dto.AbstractResponseDto;
 import com.acloudtiger.myspringsecurity.dto.UserDto;
+import com.acloudtiger.myspringsecurity.entity.ApplicationUser;
+import com.acloudtiger.myspringsecurity.repository.ApplicationUserRepository;
 import com.acloudtiger.myspringsecurity.service.UserService;
 import com.acloudtiger.myspringsecurity.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +21,18 @@ import java.util.List;
 public class SecuredRestController {
     private static Logger logger = LoggerFactory.getLogger(SecuredRestController.class);
 
+    private ApplicationUserRepository applicationUserRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private UserService userService;
 
     @Autowired
-    public SecuredRestController(UserService userService) {
+    public SecuredRestController(ApplicationUserRepository applicationUserRepository,
+                                 UserService userService) {
+        this.applicationUserRepository = applicationUserRepository;
         this.userService = userService;
     }
-
 
     @GetMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AbstractResponseDto> listAllUsers() {
@@ -57,6 +65,14 @@ public class SecuredRestController {
         return ResponseUtil.success().body(user).message("User created successfully !!!").send(HttpStatus.CREATED);
 
     }
+
+
+    @PostMapping(path = "/sign-up")
+    public void signUp(@RequestBody ApplicationUser user){
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        applicationUserRepository.save(user);
+    }
+
 
     /*@PutMapping(path = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

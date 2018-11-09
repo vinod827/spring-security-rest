@@ -2,7 +2,7 @@ package com.acloudtiger.myspringsecurity.service;
 
 import com.acloudtiger.myspringsecurity.dto.UserDto;
 import com.acloudtiger.myspringsecurity.entity.User;
-import com.acloudtiger.myspringsecurity.jpa.UserDetailJPA;
+import com.acloudtiger.myspringsecurity.repository.UserDetailJPA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
