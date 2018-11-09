@@ -2,20 +2,16 @@ package com.acloudtiger.myspringsecurity.controller;
 
 import com.acloudtiger.myspringsecurity.dto.AbstractResponseDto;
 import com.acloudtiger.myspringsecurity.dto.UserDto;
-import com.acloudtiger.myspringsecurity.entity.User;
 import com.acloudtiger.myspringsecurity.service.UserService;
 import com.acloudtiger.myspringsecurity.util.ResponseUtil;
-import org.apache.commons.logging.LogFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.util.List;
 
 @RestController
