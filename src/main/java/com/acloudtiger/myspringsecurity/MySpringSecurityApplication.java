@@ -1,14 +1,10 @@
 package com.acloudtiger.myspringsecurity;
 
-import com.acloudtiger.myspringsecurity.controller.SecuredRestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class MySpringSecurityApplication {
