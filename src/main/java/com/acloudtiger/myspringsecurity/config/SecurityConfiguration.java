@@ -1,3 +1,4 @@
+/*
 package com.acloudtiger.myspringsecurity.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -16,3 +17,4 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable();
     }
 }
+*/
