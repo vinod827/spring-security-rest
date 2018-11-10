@@ -44,6 +44,19 @@ public class SecuredRestController {
         return ResponseUtil.success().body(user).message("User Signed Up successfully").send(HttpStatus.CREATED);
     }
 
+    @PostMapping(path = "/user/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<AbstractResponseDto> userLogin(@RequestBody ApplicationUser user) {
+        logger.info("Entering userLogin@SecuredRestController");
+        ApplicationUser userObj = applicationUserRepository.findByUsername(user.getUsername());
+        logger.info(userObj.getPassword());
+        logger.info(bCryptPasswordEncoder.encode(user.getPassword()));
+        if(null != userObj && userObj.getPassword().equals(bCryptPasswordEncoder.encode(user.getPassword()))){
+            return ResponseUtil.success().body(user).message("User logged-in successfully").send(HttpStatus.CREATED);
+        }
+        return ResponseUtil.success().body(user).message("Login failed").send(HttpStatus.FORBIDDEN);
+
+    }
+
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AbstractResponseDto> listAllUsers() {
         logger.info("Entering ListAllUserDetails@SecuredRestController");

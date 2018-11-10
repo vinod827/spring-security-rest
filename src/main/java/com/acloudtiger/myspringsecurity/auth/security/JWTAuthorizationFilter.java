@@ -47,7 +47,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
+        UsernamePasswordAuthenticationToken authentication = getAuthentication(header);
         logger.info("Authentication:: {}", authentication);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -58,20 +58,18 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     /**
      *
-     * @param request
+     * @param header
      * @return
      */
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
+    private UsernamePasswordAuthenticationToken getAuthentication(String header){
         logger.info("Entering getAuthenticationToken@JWTAuthorizationFilter");
-
-        String token = request.getHeader(SecurityConstant.HEADER_STRING);
-        logger.info("token::{}", token);
-        if(null != token){
+        logger.info("token::{}", header);
+        if(null != header){
 
             //Parsing JWT Token
             String user = Jwts.parser()
                     .setSigningKey(SecurityConstant.SECRET)
-                    .parseClaimsJws(token.replace(SecurityConstant.TOKEN_PREFIX, ""))
+                    .parseClaimsJws(header.replace(SecurityConstant.TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();
 
