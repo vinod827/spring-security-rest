@@ -7,7 +7,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int userId;
+    private Long userId;
 
     @Column
     private String firstName;
@@ -24,7 +24,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -39,7 +39,7 @@ public class User {
     public User(){
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -1,25 +1,34 @@
 package com.acloudtiger.myspringsecurity.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Id;
 
-@Entity
+@Document
 public class ApplicationUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
 
     private String password;
 
-    public ApplicationUser() {
+    private String emailAddress;
 
+    public ApplicationUser(String username, String password, String emailAddress) {
+        this.username = username;
+        this.password = password;
+        this.emailAddress = emailAddress;
     }
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
     public Long getId() {
         return id;
