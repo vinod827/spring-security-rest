@@ -35,7 +35,7 @@ public class SecuredRestController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @PostMapping(path = "/user/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "/users/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AbstractResponseDto> userSignUp(@RequestBody ApplicationUser user){
         logger.info("Entering userSignUp@SecuredRestController");

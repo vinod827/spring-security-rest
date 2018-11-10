@@ -40,13 +40,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try{
             ApplicationUser credential = new ObjectMapper()
                     .readValue(request.getInputStream(), ApplicationUser.class);
+            logger.info("Validating Credential:: {}, {}", credential.getUsername(), credential.getPassword());
 
-            logger.info("Validating Credential:: {}, {}",credential.getUsername(), credential.getPassword());
-
-            return authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(credential.getUsername(),
-                            credential.getPassword(),
-                            new ArrayList<>()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credential.getUsername(),
+                            credential.getPassword(), new ArrayList<>()));
 
         }catch(IOException io){
             throw new RuntimeException(io);
@@ -69,5 +66,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         logger.info("JWT Token:: {}", jwtToken);
         response.addHeader(SecurityConstant.HEADER_STRING, SecurityConstant.TOKEN_PREFIX + jwtToken);
 
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed) throws IOException, ServletException {
+        logger.info("Failed authentication while attempting to access");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication Failed");
     }
 }
