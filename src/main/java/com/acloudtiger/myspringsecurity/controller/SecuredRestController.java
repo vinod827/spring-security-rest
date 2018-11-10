@@ -28,11 +28,20 @@ public class SecuredRestController {
     private UserService userService;
 
     @Autowired
-    public SecuredRestController(ApplicationUserRepository applicationUserRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                 UserService userService) {
+    public SecuredRestController(ApplicationUserRepository applicationUserRepository,
+                                 BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
         this.applicationUserRepository = applicationUserRepository;
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @PostMapping(path = "/user/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<AbstractResponseDto> userSignUp(@RequestBody ApplicationUser user){
+        logger.info("Entering userSignUp@SecuredRestController");
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        applicationUserRepository.save(user);
+        return ResponseUtil.success().body(user).message("User Signed Up successfully").send(HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,13 +77,7 @@ public class SecuredRestController {
     }
 
 
-    @PostMapping(path = "/user/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<AbstractResponseDto> userSignUp(@RequestBody ApplicationUser user){
-        logger.info("Entering userSignUp@SecuredRestController");
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        applicationUserRepository.save(user);
-        return ResponseUtil.success().body(user).message("User Signed Up successfully").send(HttpStatus.CREATED);
-    }
+
 
 
     /*@PutMapping(path = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,

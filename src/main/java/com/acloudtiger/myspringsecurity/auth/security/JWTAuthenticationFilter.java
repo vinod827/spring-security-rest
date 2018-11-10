@@ -24,11 +24,9 @@ import java.util.Date;
 import com.acloudtiger.myspringsecurity.auth.security.constants.SecurityConstant;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     private static Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
     private AuthenticationManager authenticationManager;
-
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -60,8 +58,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-
         logger.info("Entering successfulAuthentication@JWTAuthenticationFilter");
+
         String jwtToken = Jwts.builder()
                 .setSubject(((User) authResult.getPrincipal()).getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstant.EXPIRATION_TIME))

@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class MySpringSecurityApplication {
-
     private static Logger logger = LoggerFactory.getLogger(MySpringSecurityApplication.class);
 
     @Bean
@@ -21,10 +20,7 @@ public class MySpringSecurityApplication {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(MySpringSecurityApplication.class, args);
         applicationContext.getBeanDefinitionNames();
-
         logger.info("All beans loaded successfully");
-        //System.out.println("All beans::"+Arrays.stream(applicationContext.getBeanDefinitionNames()).map(obj -> (obj)).collect(Collectors.toList()));
-
 
     }
 }
