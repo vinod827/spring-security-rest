@@ -1,13 +1,14 @@
 package com.acloudtiger.myspringsecurity.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 
 @Document
 public class ApplicationUser {
 
-    @Id
+    @Field("_id")
     private Long id;
 
     private String username;
