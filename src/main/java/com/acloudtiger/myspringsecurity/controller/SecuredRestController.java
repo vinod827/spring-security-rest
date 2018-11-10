@@ -28,10 +28,11 @@ public class SecuredRestController {
     private UserService userService;
 
     @Autowired
-    public SecuredRestController(ApplicationUserRepository applicationUserRepository,
+    public SecuredRestController(ApplicationUserRepository applicationUserRepository, BCryptPasswordEncoder bCryptPasswordEncoder,
                                  UserService userService) {
         this.applicationUserRepository = applicationUserRepository;
         this.userService = userService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +68,7 @@ public class SecuredRestController {
     }
 
 
-    @PostMapping(path = "/user/sign-up")
+    @PostMapping(path = "/user/sign-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AbstractResponseDto> userSignUp(@RequestBody ApplicationUser user){
         logger.info("Entering userSignUp@SecuredRestController");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
