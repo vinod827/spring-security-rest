@@ -10,11 +10,21 @@ public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String username;
 
     private String password;
+
+    public ApplicationUser() {
+
+    }
+
+    public ApplicationUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;

@@ -34,7 +34,7 @@ public class SecuredRestController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AbstractResponseDto> listAllUsers() {
         logger.info("Entering ListAllUserDetails@SecuredRestController");
         List<UserDto> users = userService.getAllUsers();
@@ -67,10 +67,12 @@ public class SecuredRestController {
     }
 
 
-    @PostMapping(path = "/sign-up")
-    public void signUp(@RequestBody ApplicationUser user){
+    @PostMapping(path = "/user/sign-up")
+    public HttpEntity<AbstractResponseDto> userSignUp(@RequestBody ApplicationUser user){
+        logger.info("Entering userSignUp@SecuredRestController");
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         applicationUserRepository.save(user);
+        return ResponseUtil.success().body(user).message("User Signed Up successfully").send(HttpStatus.CREATED);
     }
 
 
