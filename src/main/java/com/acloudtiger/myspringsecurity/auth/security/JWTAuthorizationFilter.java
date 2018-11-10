@@ -38,8 +38,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                                     FilterChain chain) throws IOException, ServletException {
         logger.info("Entering doFilterInternal@JWTAuthorizationFilter");
         String header = request.getHeader(SecurityConstant.HEADER_STRING);
+        logger.info("header:: {}", header);
 
         if(null == header || !header.startsWith(SecurityConstant.TOKEN_PREFIX)){
+            logger.info("chaining");
             chain.doFilter(request, response);
             return;
         }
