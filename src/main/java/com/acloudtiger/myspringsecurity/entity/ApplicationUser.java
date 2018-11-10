@@ -16,6 +16,11 @@ public class ApplicationUser {
 
     private String emailAddress;
 
+    public ApplicationUser() {
+
+    }
+
+
     public ApplicationUser(String username, String password, String emailAddress) {
         this.username = username;
         this.password = password;
